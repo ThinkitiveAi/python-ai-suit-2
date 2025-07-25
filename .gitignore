@@ -1,0 +1,20 @@
+# Frontend dependencies (current directory)
+FrontEnd/node_modules/
+FrontEnd/.yarn/cache/
+FrontEnd/.yarn/unplugged/
+FrontEnd/.yarn/build-state.yml
+FrontEnd/.yarn/install-state.gz
+FrontEnd/dist/
+FrontEnd/build/
+
+# Frontend dependencies (old directory name)
+Front-End/node_modules/
+Front-End/.yarn/cache/
+Front-End/.yarn/unplugged/
+Front-End/.yarn/build-state.yml
+Front-End/.yarn/install-state.gz
+Front-End/dist/
+Front-End/build/
+
+#Ignore cursor AI rules
+.cursor/rules/codacy.mdc
