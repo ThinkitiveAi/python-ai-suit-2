@@ -61,8 +61,9 @@ export interface ProviderRegistrationResponse {
 }
 
 export interface ProviderLoginData {
-  credential: string; // email or phone
+  identifier: string; // email or phone (changed from credential)
   password: string;
+  remember_me?: boolean; // added remember_me field
 }
 
 export interface ProviderLoginResponse {
@@ -110,7 +111,8 @@ export const providerAPI = {
   
   login: async (data: ProviderLoginData): Promise<ProviderLoginResponse> => {
     try {
-      const response = await api.post('/api/v1/provider/login', data);
+      // Use the correct auth endpoint from the curl command
+      const response = await api.post('/api/v1/auth/login', data);
       return response.data;
     } catch (error: any) {
       // If API is not available, check dummy credentials
@@ -120,10 +122,10 @@ export const providerAPI = {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 2000));
         
-        // Check if credentials match dummy credentials
-        const isDummyEmail = data.credential === DUMMY_CREDENTIALS.provider.email && 
+        // Check if credentials match dummy credentials (using identifier instead of credential)
+        const isDummyEmail = data.identifier === DUMMY_CREDENTIALS.provider.email && 
                             data.password === DUMMY_CREDENTIALS.provider.password;
-        const isDummyPhone = data.credential === DUMMY_CREDENTIALS.provider.phone && 
+        const isDummyPhone = data.identifier === DUMMY_CREDENTIALS.provider.phone && 
                             data.password === DUMMY_CREDENTIALS.provider.password;
         
         if (isDummyEmail || isDummyPhone) {

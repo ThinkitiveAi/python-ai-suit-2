@@ -97,7 +97,7 @@ const theme = {
 
 // Validation schema
 const loginValidationSchema = Yup.object({
-  credential: Yup.string()
+  identifier: Yup.string() // changed from credential
     .required("Email or phone number is required")
     .test(
       "email-or-phone",
@@ -130,7 +130,7 @@ const ProviderLoginComponent: React.FC = () => {
   });
 
   const initialValues = {
-    credential: "",
+    identifier: "", // changed from credential
     password: "",
     rememberMe: false,
   };
@@ -141,8 +141,9 @@ const ProviderLoginComponent: React.FC = () => {
     try {
       // Map form values to API structure
       const loginData: ProviderLoginData = {
-        credential: values.credential,
+        identifier: values.identifier, // changed from credential
         password: values.password,
+        remember_me: values.rememberMe, // added remember_me field
       };
 
       // Call the API
@@ -273,14 +274,14 @@ const ProviderLoginComponent: React.FC = () => {
                 <Form>
                   <Stack gap="md">
                     {/* Email/Phone Input */}
-                    <Field name="credential">
+                    <Field name="identifier">
                       {({ field }: any) => (
                         <TextInput
                           {...field}
                           label="Email or Phone Number"
                           placeholder="Enter your email or phone number"
-                          leftSection={getCredentialIcon(values.credential)}
-                          error={touched.credential && errors.credential}
+                          leftSection={getCredentialIcon(values.identifier)}
+                          error={touched.identifier && errors.identifier}
                           disabled={loginState.isLoading || loginState.success}
                           size="md"
                           radius="md"
