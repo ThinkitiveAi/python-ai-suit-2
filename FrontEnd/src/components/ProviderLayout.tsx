@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Container } from '@mantine/core';
 import Navbar from './Navbar';
 import ProviderAvailability from './ProviderAvailability';
+import Settings from './Settings';
 
 interface ProviderLayoutProps {
   children?: React.ReactNode;
@@ -77,14 +78,7 @@ const ProviderLayout: React.FC<ProviderLayoutProps> = ({
           </Container>
         );
       case 'settings':
-        return (
-          <Container size="xl" py={40}>
-            <Box ta="center">
-              <h2>Settings</h2>
-              <p>Settings content will be implemented here</p>
-            </Box>
-          </Container>
-        );
+        return <Settings />;
       default:
         return children || (
           <Container size="xl" py={40}>
