@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { MantineProvider } from "@mantine/core";
 import { AppointmentList } from './components/appointment';
+import ProviderLayout from './components/ProviderLayout';
 
 // Root route
 const rootRoute = createRootRoute({
@@ -18,6 +19,31 @@ const rootRoute = createRootRoute({
   ),
 });
 
+// Provider routes
+const providerRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/provider",
+  component: () => <ProviderLayout activeTab="dashboard" />,
+});
+
+const providerSettingsRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: "/settings",
+  component: () => <ProviderLayout activeTab="settings" />,
+});
+
+const providerSchedulingRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: "/scheduling", 
+  component: () => <ProviderLayout activeTab="scheduling" />,
+});
+
+const providerDashboardRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: "/dashboard",
+  component: () => <ProviderLayout activeTab="dashboard" />,
+});
+
 // Provider appointment route
 const providerAppointmentRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -25,14 +51,14 @@ const providerAppointmentRoute = createRoute({
   component: AppointmentList,
 });
 
-// Index route - redirect to appointment
+// Index route - redirect to provider settings
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: () => {
-    // Redirect to appointment list
-    window.location.href = "/provider/appointment";
-    return <div>Redirecting to appointments...</div>;
+    // Redirect to provider settings
+    window.location.href = "/provider/settings";
+    return <div>Redirecting to provider settings...</div>;
   },
 });
 
@@ -40,6 +66,11 @@ const indexRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   indexRoute,
   providerAppointmentRoute,
+  providerRoute.addChildren([
+    providerSettingsRoute,
+    providerSchedulingRoute,
+    providerDashboardRoute,
+  ]),
 ]);
 
 // Create the router

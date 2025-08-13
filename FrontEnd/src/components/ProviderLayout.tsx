@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Container } from '@mantine/core';
+import { Box, Container, Group, TextInput } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 import Navbar from './Navbar';
-import ProviderAvailability from './ProviderAvailability';
+import ProviderAvailability from './provider/ProviderAvailability';
+import ProviderScheduling from './provider/ProviderScheduling';
 import Settings from './Settings';
+import ProviderAvailabilitySettings from './provider/ProviderAvailabilitySettings';
 
 interface ProviderLayoutProps {
   children?: React.ReactNode;
@@ -22,7 +25,7 @@ const ProviderLayout: React.FC<ProviderLayoutProps> = ({
   const renderContent = () => {
     switch (currentTab) {
       case 'scheduling':
-        return <ProviderAvailability />;
+        return <ProviderScheduling />;
       case 'dashboard':
         return (
           <Container size="xl" py={40}>
@@ -78,7 +81,7 @@ const ProviderLayout: React.FC<ProviderLayoutProps> = ({
           </Container>
         );
       case 'settings':
-        return <Settings />;
+        return <ProviderAvailabilitySettings />;
       default:
         return children || (
           <Container size="xl" py={40}>
@@ -92,11 +95,57 @@ const ProviderLayout: React.FC<ProviderLayoutProps> = ({
   };
 
   return (
-    <Box style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+    <Box style={{ minHeight: '100vh', backgroundColor: '#f3f3f3' }}>
       <Navbar 
         onTabChange={handleTabChange} 
         activeTab={currentTab} 
       />
+      
+      {/* Search Bar */}
+      <Box style={{ padding: '4px 16px', backgroundColor: '#F3F3F3' }}>
+        <Group justify="flex-end">
+          <Box style={{ 
+            position: 'relative',
+            width: 250,
+            height: 34,
+            backgroundColor: '#FFFFFF',
+            borderRadius: 4,
+            boxShadow: '0px 0px 8px 0px rgba(0, 0, 0, 0.16)'
+          }}>
+            <TextInput
+              placeholder="Search by patient name, DOB"
+              style={{ 
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+              styles={{
+                input: {
+                  border: 'none',
+                  borderRadius: 4,
+                  paddingLeft: 40,
+                  fontSize: 14,
+                  color: 'rgba(26, 26, 26, 0.5)',
+                  backgroundColor: 'transparent'
+                }
+              }}
+            />
+            <IconSearch 
+              size={24} 
+              style={{ 
+                position: 'absolute',
+                left: 8,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: 'rgba(26, 26, 26, 0.5)'
+              }} 
+            />
+          </Box>
+        </Group>
+      </Box>
+      
       <Box style={{ minHeight: 'calc(100vh - 40px)' }}>
         {renderContent()}
       </Box>

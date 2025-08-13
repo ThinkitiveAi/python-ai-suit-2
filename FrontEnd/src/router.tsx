@@ -3,6 +3,10 @@ import { createRouter, createRoute, createRootRoute } from '@tanstack/react-rout
 import { MantineProvider } from '@mantine/core';
 import PatientLogin from './components/PatientLogin';
 import ProviderRegistration from './components/ProviderRegistration';
+import { providerRoute } from './routes/provider';
+import { providerSettingsRoute } from './routes/provider/settings';
+import { providerSchedulingRoute } from './routes/provider/scheduling';
+import { indexRoute } from './routes/index';
 
 const theme = {
   primaryColor: 'blue',
@@ -104,10 +108,15 @@ const providerRegisterRoute = createRoute({
 
 // Create the route tree
 const routeTree = rootRoute.addChildren([
+  indexRoute,
   authRoute.addChildren([
     patientLoginRoute,
     providerLoginRoute,
     providerRegisterRoute,
+  ]),
+  providerRoute.addChildren([
+    providerSettingsRoute,
+    providerSchedulingRoute,
   ]),
 ]);
 
